@@ -5,6 +5,7 @@ import threading
 
 inicioPuente = 10
 largoPuente = 20
+finPuente = inicioPuente + largoPuente
 
 cantVacas = 5
 
@@ -26,9 +27,11 @@ class Vaca(threading.Thread):
                 self.posicion += 1
             try:
                 semaforoIndividual.acquire()
-                while inicioPuente <= self.posicion < inicioPuente + largoPuente:
+                while self.posicion >= inicioPuente:
                     time.sleep(1 - self.velocidad)
                     self.posicion += 1
+                    if self.posicion == finPuente:
+                        semaforoIndividual.release()
             finally:
                 semaforoIndividual.release()
         finally:
