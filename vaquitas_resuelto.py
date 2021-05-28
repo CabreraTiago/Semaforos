@@ -22,15 +22,15 @@ class Vaca(threading.Thread):
     def avanzar(self):
         semaforoGrupal.acquire()
         try:
-            while self.posicion < inicioPuente:
+            while self.posicion < inicioPuente - 1:
                 time.sleep(1 - self.velocidad)
                 self.posicion += 1
             try:
                 semaforoIndividual.acquire()
-                while self.posicion >= inicioPuente:
+                while self.posicion >= inicioPuente - 1:
                     time.sleep(1 - self.velocidad)
                     self.posicion += 1
-                    if self.posicion == finPuente:
+                    if self.posicion == finPuente - 1:
                         semaforoIndividual.release()
             finally:
                 semaforoIndividual.release()
